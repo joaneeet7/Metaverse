@@ -1,8 +1,10 @@
 import Movements from "./movements.js";
 import blockchain from "./Web3.js";
+import mint from "./Mint.js";
 
 // Declaration of a new scene with Three.js
 const scene = new THREE.Scene();
+scene.background = new THREE.Color( 0xbfd1e5 );
 
 // Camera and renderer configuration
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -12,8 +14,7 @@ document.body.appendChild(renderer.domElement);
 
 // Setting the scene lights
 const ambient_light = new THREE.AmbientLight(0xBDA355);
-const directional_light = new THREE.DirectionalLight(0x337DFF, 0.5);
-
+const directional_light = new THREE.DirectionalLight(0xffffff, 1);
 ambient_light.add(directional_light);
 scene.add(ambient_light)
 
@@ -66,6 +67,14 @@ function animate() {
 }
 animate();
 
+// // New NFT
+// const buttonMint = document.getElementById( 'mint' );
+// buttonMint.addEventListener( 'click', mintNFT );
+// function mintNFT() {
+//     blockchain.then((result) => {
+//         console.log(result)
+//     });
+// }
 
 // Web3 connection to the data generated in the Blockchain to be 
 // represented in the Metaverse
