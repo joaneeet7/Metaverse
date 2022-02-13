@@ -24,16 +24,16 @@ const box = new THREE.Mesh(geometry, material);
 scene.add(box);
 
 // Geometric figure to be represented in the Metaverse: Cone
-const geometry_cone = new THREE.ConeGeometry( 5, 10, 32 );
-const material_cone = new THREE.MeshBasicMaterial( {color: 0xED810A} );
-const cone = new THREE.Mesh( geometry_cone, material_cone );
+const geometry_cone = new THREE.ConeGeometry(5, 10, 32);
+const material_cone = new THREE.MeshBasicMaterial({ color: 0xED810A });
+const cone = new THREE.Mesh(geometry_cone, material_cone);
 cone.position.set(-10, 5, 0)
 scene.add(cone);
 
 // Geometric figure to be represented in the Metaverse: Cylinder
-const geometry_cylinder = new THREE.CylinderGeometry( 5, 5, 5, 32 );
-const material_cylinder = new THREE.MeshBasicMaterial( {color: 0x0AC3ED} );
-const cylinder = new THREE.Mesh( geometry_cylinder, material_cylinder );
+const geometry_cylinder = new THREE.CylinderGeometry(5, 5, 5, 32);
+const material_cylinder = new THREE.MeshBasicMaterial({ color: 0x0AC3ED });
+const cylinder = new THREE.Mesh(geometry_cylinder, material_cylinder);
 cylinder.position.set(20, 5, 0)
 scene.add(cylinder);
 

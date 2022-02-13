@@ -8,13 +8,14 @@ const blockchain = new Promise((res, rej) => {
         rej("You should install Metamask to use it!");
     }
 
-    //window.ethereum.request({ method: "eth_requestAccounts" });
+    // Web3 Instance
     let web3 = new Web3(window.ethereum);
     let contract = new web3.eth.Contract(abi, "0x2927e5823e822aB27a17ef1C6B248c99A007ABa7");
-    
+
     // Get my Metamask address
     web3.eth.getAccounts().then((accounts) => {
-        console.log("-> My account is:",accounts[0])});
+        console.log("-> My account is:", accounts[0])
+    });
 
     // Get the current supply of NFT tokens
     web3.eth.getAccounts().then((accounts) => {
@@ -41,7 +42,7 @@ const blockchain = new Promise((res, rej) => {
     web3.eth.getAccounts().then((accounts) => {
         contract.methods.totalSupply().call({ from: accounts[0] }).then((supply) => {
             contract.methods.getBuildings().call({ from: accounts[0] }).then((data) => {
-                res({supply: supply, building: data});
+                res({ supply: supply, building: data });
             })
         })
     })
