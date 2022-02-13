@@ -3,10 +3,11 @@ pragma solidity ^0.8.0;
 
 // Openzeppelin Imports
 import "@openzeppelin/contracts@4.4.2/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts@4.4.2/access/Ownable.sol";
 import "@openzeppelin/contracts@4.4.2/utils/Counters.sol";
 
 // Creation of the Metaverse Smart Contract with NFT Tokens
-contract Metaverse is ERC721 {
+contract Metaverse is ERC721, Ownable {
 
     // Counters to regulate the current amount of NFT tokens minted
     using Counters for Counters.Counter;
@@ -63,5 +64,11 @@ contract Metaverse is ERC721 {
     // Obtain a user's Metaverse buildings
     function getOwnerBuildings() public view returns (Building [] memory){
         return NFTOWners[msg.sender];
+    }
+
+    // Extraction of ethers from the Smart Contract to the Owner
+    function withdraw() external payable onlyOwner{
+        address payable _owner = payable(owner());
+        _owner.transfer(address(this).balance);
     }
 }
