@@ -75,9 +75,39 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_mintAmount",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "_building_name",
+				"type": "string"
+			},
+			{
+				"internalType": "int8",
+				"name": "_w",
+				"type": "int8"
+			},
+			{
+				"internalType": "int8",
+				"name": "_h",
+				"type": "int8"
+			},
+			{
+				"internalType": "int8",
+				"name": "_d",
+				"type": "int8"
+			},
+			{
+				"internalType": "int8",
+				"name": "_x",
+				"type": "int8"
+			},
+			{
+				"internalType": "int8",
+				"name": "_y",
+				"type": "int8"
+			},
+			{
+				"internalType": "int8",
+				"name": "_z",
+				"type": "int8"
 			}
 		],
 		"name": "mint",
@@ -305,6 +335,56 @@
 	{
 		"inputs": [],
 		"name": "getBuildings",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "int8",
+						"name": "w",
+						"type": "int8"
+					},
+					{
+						"internalType": "int8",
+						"name": "h",
+						"type": "int8"
+					},
+					{
+						"internalType": "int8",
+						"name": "d",
+						"type": "int8"
+					},
+					{
+						"internalType": "int8",
+						"name": "x",
+						"type": "int8"
+					},
+					{
+						"internalType": "int8",
+						"name": "y",
+						"type": "int8"
+					},
+					{
+						"internalType": "int8",
+						"name": "z",
+						"type": "int8"
+					}
+				],
+				"internalType": "struct Metaverse.Building[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getOwnerBuildings",
 		"outputs": [
 			{
 				"components": [

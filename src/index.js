@@ -1,59 +1,81 @@
-import keyInput from "./KeyInput.js";
-import connect from "./Connect.js";
+import Movements from "./movements.js";
+import blockchain from "./Web3.js";
 
-const ratio = window.innerWidth / window.innerHeight;
-
-// Escena
+// Declaration of a new scene with Three.js
 const scene = new THREE.Scene();
-// Camera
-const camera = new THREE.PerspectiveCamera(75, ratio, 0.1, 1000);
 
+// Camera and renderer configuration
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Luces
-const light = new THREE.AmbientLight(0x404040);
-const dLight = new THREE.DirectionalLight(0xffffff, 0.5);
+// Setting the scene lights
+const light = new THREE.AmbientLight(0xBDA355);
+const dLight = new THREE.DirectionalLight(0x337DFF, 0.5);
 light.add(dLight);
 scene.add(light)
 
-// Geometria-1
+// Geometric figure to be represented in the Metaverse: Box
 const geometry = new THREE.BoxGeometry(50, 0.1, 50);
 const material = new THREE.MeshPhongMaterial({ color: 0xffffff });
-const ground = new THREE.Mesh(geometry, material);
+const box = new THREE.Mesh(geometry, material);
+scene.add(box);
 
-scene.add(ground);
-camera.position.set(5, 15, 15);
+// Geometric figure to be represented in the Metaverse: Cone
+const geometry_cone = new THREE.ConeGeometry( 5, 20, 32 );
+const material_cone = new THREE.MeshBasicMaterial( {color: 0xED810A} );
+const cone = new THREE.Mesh( geometry_cone, material_cone );
+scene.add(cone);
 
-// Animación
+// Geometric figure to be represented in the Metaverse: Cylinder
+const geometry_cylinder = new THREE.CylinderGeometry( 5, 5, 5, 32 );
+const material_cylinder = new THREE.MeshBasicMaterial( {color: 0x0AC3ED} );
+const cylinder = new THREE.Mesh( geometry_cylinder, material_cylinder );
+scene.add(cylinder);
+
+// Camera positioning
+camera.position.set(10, 15, 40);
+
+// User camera rotations
 function animate() {
     requestAnimationFrame(animate);
-    // Rotaciones
-    if (keyInput.isPressed(38)) {
-        camera.position.x += 0.05;
-        camera.position.y += 0.05;
+    // Movement to the left
+    if (Movements.isPressed(37)) {
+        camera.position.x -= 0.5;
     }
-    if (keyInput.isPressed(40)) {
-        camera.position.x -= 0.05;
-        camera.position.y -= 0.05;
+    // Upward movement
+    if (Movements.isPressed(38)) {
+        camera.position.x += 0.5;
+        camera.position.y += 0.5;
     }
-    camera.lookAt(ground.position);
+    // Movement to the right
+    if (Movements.isPressed(39)) {
+        camera.position.x += 0.5;
+    }
+    // Downward movement
+    if (Movements.isPressed(40)) {
+        camera.position.x -= 0.5;
+        camera.position.y -= 0.5;
+    }
+    camera.lookAt(box.position);
     renderer.render(scene, camera);
 }
 animate();
 
 
-// Metamask
-connect.then((result) => {
-    console.log(result);
-    console.log(result.building)
-    result.building.forEach((b, index) => {
+// Web3 connection to the data generated in the Blockchain to be 
+// represented in the Metaverse
+blockchain.then((result) => {
+    // For each construction paid for in the Smart Contract, 
+    // a graphical representation is made in the Metaverse
+    result.building.forEach((building, index) => {
         if (index <= result.supply) {
-            const boxGeometry = new THREE.BoxGeometry(b.w, b.h, b.d);
-            const boxMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+            // Representation of NFT tokens as boxes 
+            const boxGeometry = new THREE.BoxGeometry(building.w, building.h, building.d);
+            const boxMaterial = new THREE.MeshPhongMaterial({ color: 0x33FFFC });
             const box = new THREE.Mesh(boxGeometry, boxMaterial);
-            box.position.set(b.x, b.y, b.z);
+            box.position.set(building.x, building.y, building.z);
             scene.add(box);
         }
     });

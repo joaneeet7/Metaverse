@@ -13,22 +13,16 @@ contract Metaverse is ERC721 {
     Counters.Counter private supply;
 
     // Total number of NFT tokens available for creation
-    uint256 public maxSupply = 7;
+    uint256 public maxSupply = 100;
 
     // Cost to be paid for each NFT token
     uint256 public cost = 0 ether;
 
-    // Constructor that receives name and symbol from the NFT token and 
-    // establishes the structures of the Metaverse
-    constructor() ERC721("META", "MJG") {
-        buildings.push(Building("Restaurant", 0, 0, 0, 0, 0, 0));
-        buildings.push(Building("House", 1, 3, 2, 2, 0, 3));
-        buildings.push(Building("Joan's House", 4, 7, 3, 15, 0, 6));
-        buildings.push(Building("George's House", 2, 5, 4, 10, 0, 6));
-        buildings.push(Building("Gallery", 1, 6, 2, 10, 0, 6));
-        buildings.push(Building("Bakery", 2, 1, 12, 2, 0, 6));
-        buildings.push(Building("Cinema", 5, 1, 2, 4, 7, 2));
-    }
+    // Owner and its properties in the Metaverse
+    mapping (address => Building[]) NFTOWners;
+
+    // Constructor that receives name and symbol from the NFT token 
+    constructor() ERC721("META", "MJG") {}
 
     // Metaverse building positioning data structure
     struct Building {
@@ -54,19 +48,20 @@ contract Metaverse is ERC721 {
         return supply.current();
     }
 
-    // Restrictions on the creation of new NFTs
-    modifier mintRestrictions(uint256 _mintAmount) {
-        require(_mintAmount > 0, "Invalid mint amount!");
-        require(supply.current() + _mintAmount <= maxSupply, "Max supply exceeded!");
-        _;
+    // Creation of the Construction as an NFT token in the Metaverse 
+    // by providing its coordinates
+    function mint(string memory _building_name, int8 _w, int8 _h, int8 _d, int8 _x, int8 _y, int8 _z) public payable {
+        require(supply.current() <= maxSupply, "Max supply exceeded!");
+        require(msg.value >= cost , "Insufficient funds!");
+        supply.increment();
+        _safeMint(msg.sender, supply.current());
+        Building memory _newBuild = Building(_building_name, _w, _h, _d, _x, _y, _z);
+        buildings.push(_newBuild);
+        NFTOWners[msg.sender].push(_newBuild);
     }
 
-    // Creation of a new NFT token for the Metaverse
-    function mint(uint256 _mintAmount) public payable mintRestrictions(_mintAmount) {
-        require(msg.value >= cost * _mintAmount, "Insufficient funds!");
-        for (uint256 i = 0; i < _mintAmount; i++) {
-            supply.increment();
-            _safeMint(msg.sender, supply.current());
-        }
+    // Obtain a user's Metaverse buildings
+    function getOwnerBuildings() public view returns (Building [] memory){
+        return NFTOWners[msg.sender];
     }
 }
