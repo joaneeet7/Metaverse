@@ -6,7 +6,7 @@ const connect = new Promise((res, rej) => {
     }
     window.ethereum.request({ method: "eth_requestAccounts" });
     let web3 = new Web3(window.ethereum);
-    let contract = new web3.eth.Contract(abi, "0xB5E51C83272Fb6b69a1a7726ef47b063AA0bf62E");
+    let contract = new web3.eth.Contract(abi, "0x6209858b82f5575C93596FbC231A8e06dC84Bec6");
     web3.eth.getAccounts().then((accounts) => {
         contract.methods.totalSupply().call({ from: accounts[0] }).then((supply) => {
             contract.methods.getBuildings().call({ from: accounts[0] }).then((data) => {
