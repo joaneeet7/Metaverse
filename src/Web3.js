@@ -1,6 +1,5 @@
 import abi from "./abi/abi.json" assert {type: "json"};
 
-
 const blockchain = new Promise((res, rej) => {
 
     // If Metamask is not available, notify the user
@@ -10,7 +9,7 @@ const blockchain = new Promise((res, rej) => {
 
     // Web3 Instance
     let web3 = new Web3(window.ethereum);
-    let contract = new web3.eth.Contract(abi, "0x2927e5823e822aB27a17ef1C6B248c99A007ABa7");
+    let contract = new web3.eth.Contract(abi, "0x5Ffd95c593A60d7cA0AdA9b6c099f6Ee6E6c508D");
 
     // Get my Metamask address
     web3.eth.getAccounts().then((accounts) => {

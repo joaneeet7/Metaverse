@@ -1,6 +1,6 @@
 import Movements from "./movements.js";
 import blockchain from "./Web3.js";
-import mint from "./Mint.js";
+import abi from "./abi/abi.json" assert {type: "json"};
 
 // Declaration of a new scene with Three.js
 const scene = new THREE.Scene();
@@ -71,6 +71,7 @@ animate();
 const buttonMint = document.getElementById('mint');
 buttonMint.addEventListener('click', mintNFT);
 function mintNFT() {
+    // Parameters to create a NFT in the Metaverse
     var nft_name = document.getElementById("nft_name").value;
     var nft_width = document.getElementById("nft_width").value;
     var nft_height = document.getElementById("nft_height").value;
@@ -78,14 +79,20 @@ function mintNFT() {
     var nft_x = document.getElementById("nft_x").value;
     var nft_y = document.getElementById("nft_y").value;
     var nft_z = document.getElementById("nft_z").value;
-    console.log("====== NEW NFT ======", nft_name)
-    console.log("====== NEW NFT ======", nft_width)
-    console.log("====== NEW NFT ======", nft_height)    
 
-    blockchain.then((result) => {
-    
-        console.log(result)
-    });
+    // If Metamask is not available, notify the user
+    if (typeof window.ethereum == "undefined") {
+        console.log("You should install Metamask to use it!");
+    }
+    // Web3 Instance
+    let web3 = new Web3(window.ethereum);
+    let contract = new web3.eth.Contract(abi, "0x5Ffd95c593A60d7cA0AdA9b6c099f6Ee6E6c508D");
+
+    web3.eth.getAccounts().then((accounts) => {
+        contract.methods.mint(nft_name,nft_width,nft_height,nft_depth,nft_x,nft_y,nft_z).send({ from: accounts[0] }).then((data) => {
+            console.log("NFT available in the Metaverse!")
+        })
+    })
 }
 
 // Web3 connection to the data generated in the Blockchain to be 
