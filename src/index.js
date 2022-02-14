@@ -4,7 +4,7 @@ import mint from "./Mint.js";
 
 // Declaration of a new scene with Three.js
 const scene = new THREE.Scene();
-scene.background = new THREE.Color( 0xbfd1e5 );
+scene.background = new THREE.Color(0xbfd1e5);
 
 // Camera and renderer configuration
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -67,14 +67,26 @@ function animate() {
 }
 animate();
 
-// // New NFT
-// const buttonMint = document.getElementById( 'mint' );
-// buttonMint.addEventListener( 'click', mintNFT );
-// function mintNFT() {
-//     blockchain.then((result) => {
-//         console.log(result)
-//     });
-// }
+// New NFT
+const buttonMint = document.getElementById('mint');
+buttonMint.addEventListener('click', mintNFT);
+function mintNFT() {
+    var nft_name = document.getElementById("nft_name").value;
+    var nft_width = document.getElementById("nft_width").value;
+    var nft_height = document.getElementById("nft_height").value;
+    var nft_depth = document.getElementById("nft_depth").value;
+    var nft_x = document.getElementById("nft_x").value;
+    var nft_y = document.getElementById("nft_y").value;
+    var nft_z = document.getElementById("nft_z").value;
+    console.log("====== NEW NFT ======", nft_name)
+    console.log("====== NEW NFT ======", nft_width)
+    console.log("====== NEW NFT ======", nft_height)    
+
+    blockchain.then((result) => {
+    
+        console.log(result)
+    });
+}
 
 // Web3 connection to the data generated in the Blockchain to be 
 // represented in the Metaverse

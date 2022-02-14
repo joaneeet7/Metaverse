@@ -11,12 +11,12 @@ const mint = new Promise((res, rej) => {
     let web3 = new Web3(window.ethereum);
     let contract = new web3.eth.Contract(abi, "0x2927e5823e822aB27a17ef1C6B248c99A007ABa7");
 
-    // web3.eth.getAccounts().then((accounts) => {
-    //     contract.methods.mint("Joan",2,3,4,10,11,13).send({ from: accounts[0] }).then((data) => {
-    //         console.log("Yes!")
-    //         res({ building: data });
-    //     })
-    // })
+    web3.eth.getAccounts().then((accounts) => {
+        contract.methods.mint("Joan",2,3,4,10,11,13).send({ from: accounts[0] }).then((data) => {
+            console.log("Yes!")
+            res({ building: data });
+        })
+    })
 });
 
 export default mint;
