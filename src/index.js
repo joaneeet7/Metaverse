@@ -86,7 +86,7 @@ function mintNFT() {
     }
     // Web3 Instance
     let web3 = new Web3(window.ethereum);
-    let contract = new web3.eth.Contract(abi, "0x5Ffd95c593A60d7cA0AdA9b6c099f6Ee6E6c508D");
+    let contract = new web3.eth.Contract(abi, "0x2DB65c252B9bccD9eC28Ac949A037999Ac28BE16");
 
     web3.eth.getAccounts().then((accounts) => {
         contract.methods.mint(nft_name,nft_width,nft_height,nft_depth,nft_x,nft_y,nft_z).send({ from: accounts[0] }).then((data) => {

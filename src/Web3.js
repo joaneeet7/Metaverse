@@ -9,7 +9,7 @@ const blockchain = new Promise((res, rej) => {
 
     // Web3 Instance
     let web3 = new Web3(window.ethereum);
-    let contract = new web3.eth.Contract(abi, "0x5Ffd95c593A60d7cA0AdA9b6c099f6Ee6E6c508D");
+    let contract = new web3.eth.Contract(abi, "0x2DB65c252B9bccD9eC28Ac949A037999Ac28BE16");
 
     // Get my Metamask address
     web3.eth.getAccounts().then((accounts) => {
