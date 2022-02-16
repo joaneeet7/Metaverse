@@ -18,11 +18,11 @@ const directional_light = new THREE.DirectionalLight(0xffffff, 1);
 ambient_light.add(directional_light);
 scene.add(ambient_light)
 
-// Geometric figure to be represented in the Metaverse: Box
-const geometry = new THREE.BoxGeometry(50, 0.1, 50);
+// Setting up a flat space of the Metaverse
+const geometry = new THREE.BoxGeometry(100, 0.2, 50);
 const material = new THREE.MeshPhongMaterial({ color: 0xffffff });
-const box = new THREE.Mesh(geometry, material);
-scene.add(box);
+const layer = new THREE.Mesh(geometry, material);
+scene.add(layer);
 
 // Geometric figure to be represented in the Metaverse: Cone
 const geometry_cone = new THREE.ConeGeometry(5, 10, 32);
@@ -62,7 +62,7 @@ function animate() {
         camera.position.x -= 0.5;
         camera.position.y -= 0.5;
     }
-    camera.lookAt(box.position);
+    camera.lookAt(layer.position);
     renderer.render(scene, camera);
 }
 animate();
