@@ -49,6 +49,8 @@ const cylinder = new THREE.Mesh(geometry_cylinder, material_cylinder);
 cylinder.position.set(20, 5, 0);
 scene.add(cylinder);
 
+window.addEventListener( 'resize', onWindowResize );
+
 camera.position.set(10, 5, 40);
 
 function animate() {
@@ -85,6 +87,14 @@ function animate() {
     renderer.render(scene, camera);
 }
 animate();
+
+function onWindowResize() {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
 
 // New NFT
 const buttonMint = document.getElementById('mint');
