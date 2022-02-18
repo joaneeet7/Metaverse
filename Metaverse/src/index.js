@@ -44,7 +44,6 @@ const cylinder = new THREE.Mesh(geometry_cylinder, material_cylinder);
 cylinder.position.set(20, 5, 0);
 scene.add(cylinder);
 
-
 camera.position.set(10, 5, 40);
 
 function animate() {
