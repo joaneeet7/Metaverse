@@ -26,7 +26,14 @@
   </head>
 
   <body>
-    <script src="./three.js"></script>
+    <script type="importmap">
+			{
+				"imports": {
+					"three": "./three.module.js"
+				}
+			}
+		</script>
+    <!-- <script src="./three.js"></script> -->
     <script src="./src/index.js" type="module"></script>
     <script src="https://unpkg.com/web3@latest/dist/web3.min.js"></script>
 

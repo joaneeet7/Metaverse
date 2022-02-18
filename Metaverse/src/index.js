@@ -1,6 +1,8 @@
+import * as THREE from "../three.module.js";
 import Movements from "./movements.js";
 import blockchain from "./Web3.js";
 import abi from "./abi/abi.json" assert {type: "json"};
+import {OrbitControls, MapControls} from "../../Example/controls/OrbitControls.js"
 
 // Declaration of a new scene with Three.js
 const scene = new THREE.Scene();
@@ -11,6 +13,9 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+
+// Mouse control
+const controls = new OrbitControls( camera, renderer.domElement );
 
 // Setting the scene lights
 const ambient_light = new THREE.AmbientLight(0xBDA355);
@@ -44,6 +49,7 @@ camera.position.set(10, 15, 40);
 // User camera rotations
 function animate() {
     requestAnimationFrame(animate);
+    controls.update()
     // Movement to the left
     if (Movements.isPressed(37)) {
         camera.position.x -= 0.5;
