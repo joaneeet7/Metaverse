@@ -3,6 +3,7 @@ import blockchain from "./Web3.js";
 import abi from "./abi/abi.json" assert {type: "json"};
 import * as THREE from "three";
 import { OrbitControls, MapControls } from "../controls/OrbitControls.js";
+import { smart_contract_address } from "./contractparams.js";
 
 // Declaration  of a new scene with Three.js
 const scene = new THREE.Scene();
@@ -15,7 +16,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Orbit controls
-let controls = new OrbitControls( camera, renderer.domElement );
+let controls = new OrbitControls(camera, renderer.domElement);
 
 // Setting the scene lights
 const ambient_light = new THREE.AmbientLight(0xbda355);
@@ -49,7 +50,7 @@ const cylinder = new THREE.Mesh(geometry_cylinder, material_cylinder);
 cylinder.position.set(20, 5, 0);
 scene.add(cylinder);
 
-window.addEventListener( 'resize', onWindowResize );
+window.addEventListener('resize', onWindowResize);
 
 camera.position.set(10, 5, 40);
 
@@ -92,7 +93,7 @@ function onWindowResize() {
 
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
 }
 
@@ -117,14 +118,36 @@ function mintNFT() {
 
     // Web3 Instance 
     let web3 = new Web3(window.ethereum);
-    let contract = new web3.eth.Contract(abi, "0xFb25E1F3774E802E90a421987E10b621D2B7d346");
+    let contract = new web3.eth.Contract(abi, smart_contract_address);
 
     web3.eth.getAccounts().then((accounts) => {
-        contract.methods.mint(nft_name, nft_width, nft_height, nft_depth, nft_x, nft_y, nft_z).send({ from: accounts[0] }).then((data) => {
-            console.log("NFT available in the Metaverse!");
+        contract.methods.cost().call().then((cost_nft) => {
+            contract.methods.mint(nft_name, nft_width, nft_height, nft_depth, nft_x, nft_y, nft_z).send({ from: accounts[0], value: parseInt(cost_nft) }).then((data) => {
+                alert("NFT available in the Metaverse!");
+            });
         });
     });
+};
 
+// Profit extraction
+const buttonProfit = document.getElementById('profit');
+buttonProfit.addEventListener('click', profitNFT);
+
+function profitNFT() {
+    // If Metamask is not available
+    if (typeof window.ethereum == "undefined") {
+        rej("You should install Metamask to use it!");
+    }
+
+    // Web3 Instance 
+    let web3 = new Web3(window.ethereum);
+    let contract = new web3.eth.Contract(abi, smart_contract_address);
+
+    web3.eth.getAccounts().then((accounts) => {
+        contract.methods.withdraw().send({from: accounts[0]}).then((data) => {
+            alert("Profit extraction!");
+        });
+    });
 };
 
 // Web3 connection to the data generated in the blockchain to be 
@@ -140,8 +163,6 @@ blockchain.then((result) => {
             const nft = new THREE.Mesh(boxGeometry, boxMaterial);
             nft.position.set(building.x, building.y, building.z);
             scene.add(nft);
-        }
-    })
-
-
-})
+        };
+    });
+});

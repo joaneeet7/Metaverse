@@ -1,0 +1,1 @@
+export const smart_contract_address = "0x0B02b0E66E86d54D0E030dc92Cba05CDae8D2bAE";
