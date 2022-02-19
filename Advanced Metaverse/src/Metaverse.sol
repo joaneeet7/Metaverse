@@ -20,7 +20,7 @@ contract Metaverse is ERC721, Ownable {
     uint256 public maxSupply = 100;
 
     // Cost to be paid for each NFT Token
-    uint256 public cost = 1 ether;
+    uint256 public cost = 0.1 ether;
 
     // Owner and its properties in the Metaverse
     mapping (address => Building []) NFTOwners;
