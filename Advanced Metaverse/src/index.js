@@ -4,6 +4,7 @@ import abi from "./abi/abi.json" assert {type: "json"};
 import * as THREE from "three";
 import { OrbitControls, MapControls } from "../controls/OrbitControls.js";
 import { smart_contract_address } from "./contractparams.js";
+import { VRButton } from './VRButton.js';
 
 // Declaration  of a new scene with Three.js
 const scene = new THREE.Scene();
@@ -14,6 +15,8 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+document.body.appendChild( VRButton.createButton( renderer ) );
+renderer.xr.enabled = true;
 
 // Orbit controls
 let controls = new OrbitControls(camera, renderer.domElement);
@@ -54,7 +57,11 @@ window.addEventListener('resize', onWindowResize);
 
 camera.position.set(10, 5, 40);
 
-function animate() {
+function animate(){
+    renderer.setAnimationLoop(render);
+}
+
+function render() {
     cube.rotation.x += 0.05;
     cube.rotation.y += 0.05;
 
